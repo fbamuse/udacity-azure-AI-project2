@@ -31,7 +31,7 @@ class DentaBot extends ActivityHandler {
             // send user input to IntentRecognizer and collect the response in a variable
             // don't forget 'await'
             const LuisResult = await this.intentRecognizer.executeLuisQuery(context);
-            const availability  = await this.dentistScheduler.getAvailability()
+            
                      
             // determine which service to respond with based on the results from LUIS //
 
@@ -43,16 +43,21 @@ class DentaBot extends ActivityHandler {
             // }
             // else {...}
             if (LuisResult.luisResult.prediction.topIntent === "GetAvailability" &&
-                LuisResult.intents.GetAvailability.score > .6 &&
-                LuisResult.entities.$instance && 
-                LuisResult.entities.$instance.time && 
-                LuisResult.entities.$instance.time[0]
+                LuisResult.intents.GetAvailability.score > .6
             ) {
-                const time = LuisResult.entities.$instance.time[0].text;
-           
-                const comfirm = "Would you like to make an appointment for " + time +"?";
-                console.log(comfirm)
-                await context.sendActivity(comfirm);
+                
+                const availability  = await this.dentistScheduler.getAvailability()
+                
+
+                if(LuisResult.entities.$instance && 
+                    LuisResult.entities.$instance.time && 
+                    LuisResult.entities.$instance.time[0]){
+                    const time = LuisResult.entities.$instance.time[0].text;
+                    const comfirm = "Thank you for your reservation.  Would you like to make an appointment for " + time +"?";
+                    await context.sendActivity(comfirm);
+              
+                    
+                }
                 await context.sendActivity(availability);
                 await next();
                 return;
@@ -66,7 +71,7 @@ class DentaBot extends ActivityHandler {
                 const time = LuisResult.entities.$instance.time[0].text;
                 const Appointment = await this.dentistScheduler.scheduleAppointment(time)
            
-                const reply = "Thank you for your appointment " + Appointment ;
+                const reply = "Thank you for your appointment.  " + Appointment ;
                 console.log(reply)
 
                 //await context.sendActivity(comfirm);
