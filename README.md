@@ -1,3 +1,16 @@
+# Dental Office Virtual Assistant Project Submission
+
+-  Create a bot application that can be modified and tested locally  
+![](2022-01-31-22-47-39.png)  
+- Train QnA Maker to answer common FAQs   
+- Train LUIS to recognize scheduling intents  
+![](2022-01-31-23-02-44.png)  
+-  Deploy bot code to Azure  
+![](2022-01-31-23-10-00.png)  
+-  Deploy the bot to a static web app in Azure.  
+https://gentle-moss-08c112b10.1.azurestaticapps.net/
+
+
 # testbot
 
 Demonstrate the core capabilities of the Microsoft Bot Framework

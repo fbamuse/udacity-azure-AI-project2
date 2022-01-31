@@ -42,6 +42,11 @@ class DentaBot extends ActivityHandler {
             //  return;
             // }
             // else {...}
+            if (qnaResults[0]) {
+                await context.sendActivity(`${qnaResults[0].answer}`);
+                await next();
+                return;
+            }
             if (LuisResult.luisResult.prediction.topIntent === "GetAvailability" &&
                 LuisResult.intents.GetAvailability.score > .6
             ) {
@@ -80,13 +85,11 @@ class DentaBot extends ActivityHandler {
                 return;
             }
 
-            if (qnaResults[0]) {
-                await context.sendActivity(`${qnaResults[0].answer}`);
-            }
-            else {
-                // If no answers were returned from QnA Maker, reply with help.
-                await context.sendActivity(`I'm not sure I can answer your question`);
-            }
+
+            
+             // If no answers were returned from QnA Maker, reply with help.
+            await context.sendActivity(`I'm not sure I can answer your question`);
+            
             await next();
     });
 
