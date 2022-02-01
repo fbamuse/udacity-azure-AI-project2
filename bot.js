@@ -76,7 +76,7 @@ class DentaBot extends ActivityHandler {
                 const time = LuisResult.entities.$instance.time[0].text;
                 const Appointment = await this.dentistScheduler.scheduleAppointment(time)
            
-                const reply = "Thank you for your appointment.  " + Appointment ;
+                const reply = Appointment ;
                 console.log(reply)
 
                 //await context.sendActivity(comfirm);
